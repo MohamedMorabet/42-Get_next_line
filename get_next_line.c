@@ -6,7 +6,7 @@
 /*   By: mel-mora <mel-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 09:31:17 by mel-mora          #+#    #+#             */
-/*   Updated: 2024/11/15 12:36:55 by mel-mora         ###   ########.fr       */
+/*   Updated: 2024/11/20 14:13:03 by mel-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,74 @@ int	didnt_reach_end(char *p)
 	return (1);
 }
 
+static void	manage_buffer(char *p, int bytes_read)
+{
+	int	i;
+
+	i = 0;
+	while (p[bytes_read])
+	{
+		p[i] = p[bytes_read];
+		i++;
+		bytes_read++;
+	}
+	p[i] = '\0';
+}
+
+void	full_line(char *p, char **tmp, char **s)
+{
+	int		i;
+	char	*tmp_s;
+
+	i = 0;
+	while (p[i] != '\n')
+		i++;
+	*tmp = ft_substr(p, 0, i + 1);
+	manage_buffer(p, i + 1);
+	tmp_s = ft_strjoin(*s, *tmp);
+	free(*s);
+	*s = tmp_s;
+}
+
+static int	handle_read_and_process(int fd, char *p, char **s)
+{
+	int		bytes_read;
+	char	*tmp;
+
+	if (p[0] == '\0')
+	{
+		bytes_read = read(fd, p, BUFFER_SIZE);
+		if (bytes_read <= 0)
+		{
+			if (bytes_read < 0)
+				p[0] = '\0';
+			return (0);
+		}
+		p[bytes_read] = '\0';
+	}
+	if (!didnt_reach_end(p))
+	{
+		full_line(p, &tmp, s);
+		free(tmp);
+		return (0);
+	}
+	tmp = ft_strjoin(*s, p);
+	free(*s);
+	*s = tmp;
+	p[0] = '\0';
+	return (1);
+}
+
 char	*get_next_line(int fd)
 {
 	char		*s;
-	char		*tmp;
-	ssize_t		bytes_read;
 	static char	p[BUFFER_SIZE + 1];
 
 	s = NULL;
-	if (fd > 0)
+	if (fd >= 0)
 	{
-		while (1)
-		{
-			bytes_read = read(fd, p, BUFFER_SIZE);
-			if (bytes_read <= 0)
-				break ;
-			p[bytes_read] = '\0';
-			if (didnt_reach_end(p) != 1)
-				break;
-			tmp = ft_strjoin(s, p);
-			if (s)
-				free (s);
-			s = tmp;
-		}
-		s = ft_strjoin(s, ft_substr(p, 0, bytes_read));
-		free (tmp);
+		while (handle_read_and_process(fd, p, &s))
+			;
 	}
 	return (s);
 }
