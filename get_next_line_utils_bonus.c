@@ -6,7 +6,7 @@
 /*   By: mel-mora <mel-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:30:18 by mel-mora          #+#    #+#             */
-/*   Updated: 2024/11/20 16:33:11 by mel-mora         ###   ########.fr       */
+/*   Updated: 2024/11/24 17:41:46 by mel-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,26 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (newstr);
 }
 
+char	*ft_strdup(const char *s)
+{
+	int		i;
+	int		len;
+	char	*copy;
+
+	i = 0;
+	len = ft_strlen((char *)s);
+	copy = (char *)malloc(len + 1);
+	if (!copy)
+		return (NULL);
+	while (s[i] != '\0')
+	{
+		copy[i] = s[i];
+		i++;
+	}
+	copy[i] = '\0';
+	return (copy);
+}
+
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	i;
@@ -60,7 +80,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	s_len = ft_strlen(s);
 	if (start >= s_len)
-		return (strdup(""));
+		return (ft_strdup(""));
 	if (start + len > s_len)
 		len = s_len - start;
 	sub = (char *)malloc(len + 1);

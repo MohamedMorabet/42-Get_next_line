@@ -6,17 +6,14 @@
 /*   By: mel-mora <mel-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:31:00 by mel-mora          #+#    #+#             */
-/*   Updated: 2024/11/20 16:31:24 by mel-mora         ###   ########.fr       */
+/*   Updated: 2024/11/24 17:41:28 by mel-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_BONUS_H
 # define GET_NEXT_LINE_BONUS_H
 
-# include <stdio.h>
 # include <unistd.h>
-# include <fcntl.h>
-# include <string.h>
 # include <stdlib.h>
 
 # ifndef BUFFER_SIZE

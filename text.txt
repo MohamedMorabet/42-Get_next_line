@@ -1,6 +1,0 @@
-hello wolrd froom line 1
-hello wolrd froom line 2
-hello wolrd froom line 3
-hello wolrd froom line 4
-hello wolrd froom line 5
-hello wolrd froom line 6

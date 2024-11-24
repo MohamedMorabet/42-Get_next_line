@@ -6,13 +6,13 @@
 /*   By: mel-mora <mel-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:16:16 by mel-mora          #+#    #+#             */
-/*   Updated: 2024/11/20 17:11:48 by mel-mora         ###   ########.fr       */
+/*   Updated: 2024/11/24 17:37:32 by mel-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
-#define MAX_FD 1024 
+#define MAX_FD 10240
 
 int	didnt_reach_end(char *p)
 {
@@ -88,7 +88,7 @@ char	*get_next_line(int fd)
 {
 	char		*s;
 	int			l;
-	static char	buffers[MAX_FD][BUFFER_SIZE + 1] = {{0}};
+	static char	buffers[MAX_FD][BUFFER_SIZE + 1];
 
 	s = NULL;
 	l = 1;
